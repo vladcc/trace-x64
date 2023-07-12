@@ -216,7 +216,7 @@ $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-tr
 29
 ```
 
-The function is 29 instructions and 117 bytes long and the loop and how many
+The function is 29 instructions and 118 bytes long and the loop and how many
 times it was taken is visible. Let's look at the call trace for main(). Again a
 small awk script will do.
 ```
