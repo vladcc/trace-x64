@@ -1,0 +1,98 @@
+context_arg_type program_opts
+context_var_name the_context
+
+unbound_arg_code
+	printf("arg without option: %s\n", arg);
+end_code
+
+on_error_code
+	FILE * where = stdout; // preserve output order
+	fprintf(where, "%s: error: ", prog_name);
+	switch (err_code)
+	{
+		case OPTS_UNKOWN_OPT_ERR:
+			fprintf(where, "option '%s' unknown\n", err_opt);
+			return;
+		break;
+		case OPTS_ARG_REQ_ERR:
+			fprintf(where, "option '%s' requires an argument\n", err_opt);
+		break;
+		case OPTS_NO_ARG_REQ_ERR:
+			fprintf(where, "option '%s' does not take arguments\n", err_opt);
+		break;
+		default:
+		break;
+	}
+	
+	exit(EXIT_FAILURE);
+end_code
+
+long_name  i-flag
+short_name i
+takes_args false
+handler_code
+	printf("%s\n", opt);
+end_code
+help_code
+	printf("help for flag %s, %s\n", short_name, long_name);
+end_code
+end
+
+long_name  j-flag
+short_name j
+takes_args false
+handler_code
+	printf("%s\n", opt);
+end_code
+help_code
+	printf("help for flag %s, %s\n", short_name, long_name);
+end_code
+end
+
+long_name  k-flag
+short_name k
+takes_args false
+handler_code
+	printf("%s\n", opt);
+end_code
+help_code
+	printf("help for flag %s, %s\n", short_name, long_name);
+end_code
+end
+
+long_name  a-option
+short_name a
+takes_args true
+handler_code
+	printf("%s %s\n", opt, opt_arg);
+end_code
+help_code
+	printf("help for option %s, %s\n", short_name, long_name);
+end_code
+end
+
+long_name  help
+short_name h
+takes_args false
+handler_code
+	opts_print_help((opts_table *)ctx);
+end_code
+help_code
+	printf("help for option %s, %s\n", short_name, long_name);
+end_code
+end
+
+long_name  sub-args
+short_name s
+takes_args true
+handler_code
+    printf("%s ", opt);
+    char * sub_arg, ** parg = &opt_arg;
+    while ((sub_arg = opts_get_sub_arg(parg, ',')))
+        printf("'%s' ", sub_arg);
+    putchar('\n');
+end_code
+help_code
+    printf("help for option %s, %s\n", short_name, long_name);
+end_code
+end

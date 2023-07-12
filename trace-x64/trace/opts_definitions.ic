@@ -1,0 +1,113 @@
+// <opts_definitions>
+
+// --exec|-x
+static const char exec_opt_short = 'x';
+static const char exec_opt_long[] = "exec";
+static void handle_exec(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_EXEC, opt_arg, ctx);
+}
+
+static void help_exec(const char * short_name, const char * long_name)
+{
+printf(" %s, %s ...       - everything after this option is taken to be a "
+"command\n", short_name, long_name);
+puts(" and its arguments. It's executed as given and traced from the start.");
+}
+
+// --no-aslr|-n
+static const char no_aslr_opt_short = 'n';
+static const char no_aslr_opt_long[] = "no-aslr";
+static void handle_no_aslr(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_NO_ASLR, opt_arg, ctx);
+}
+
+static void help_no_aslr(const char * short_name, const char * long_name)
+{
+printf(" %s, %s        - no address space layout randomization when used with "
+"-%c.\n", short_name, long_name, exec_opt_short);
+}
+
+// --pid|-p
+static const char pid_opt_short = 'p';
+static const char pid_opt_long[] = "pid";
+static void handle_pid(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_PID, opt_arg, ctx);
+}
+
+static void help_pid(const char * short_name, const char * long_name)
+{
+printf(" %s, %s <pid>      - attach to an already running process.\n",
+short_name, long_name);
+}
+
+// --max-inst|-m
+static const char max_inst_opt_short = 'm';
+static const char max_inst_opt_long[] = "max-inst";
+static void handle_max_inst(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_MAX_INST, opt_arg, ctx);
+}
+
+static void help_max_inst(const char * short_name, const char * long_name)
+{
+printf(" %s, %s <num> - collect only the next <num> number of instructions.\n",
+short_name, long_name);
+}
+
+// --seconds|-s
+static const char seconds_opt_short = 's';
+static const char seconds_opt_long[] = "seconds";
+static void handle_seconds(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_SECONDS, opt_arg, ctx);
+}
+
+static void help_seconds(const char * short_name, const char * long_name)
+{
+printf(" %s, %s <num>  - collect instructions for <num> seconds.\n",
+short_name, long_name);
+}
+
+// --help|-h
+static const char help_opt_short = 'h';
+static const char help_opt_long[] = "help";
+static void handle_help(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_HELP, opt_arg, ctx);
+}
+
+static void help_help(const char * short_name, const char * long_name)
+{
+printf(" %s, %s           - print this screen.\n", short_name, long_name);
+}
+
+// --version|-v
+static const char version_opt_short = 'v';
+static const char version_opt_long[] = "version";
+static void handle_version(const char * opt, char * opt_arg, void * ctx)
+{
+	opt_action(OPT_VERSION, opt_arg, ctx);
+}
+
+static void help_version(const char * short_name, const char * long_name)
+{
+printf(" %s, %s        - print version information.\n", short_name, long_name);
+}
+
+// on_unbound_arg
+static void on_unbound_arg(const char * arg, void * ctx)
+{
+	opt_action(OPT_UNBOUND, arg, ctx);
+}
+
+// on_error
+static void on_error(opts_err_code err_code, const char * err_opt, void * ctx)
+{
+	((prog_options *)ctx)->err_code = err_code;
+	opt_action(OPT_ERROR, err_opt, ctx);
+}
+
+// </opts_definitions>

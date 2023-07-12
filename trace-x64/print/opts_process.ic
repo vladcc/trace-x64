@@ -1,0 +1,70 @@
+// <opts_process>
+opts_table the_tbl;
+opts_entry all_entries[] = {
+	{
+		.names = {
+			.long_name = sym_opt_long,
+			.short_name = sym_opt_short
+		},
+		.handler = {
+			.handler = handle_sym,
+			.context = (void *)ctx,
+		},
+		.print_help = help_sym,
+		.takes_arg = true,
+	},
+	{
+		.names = {
+			.long_name = blob_opt_long,
+			.short_name = blob_opt_short
+		},
+		.handler = {
+			.handler = handle_blob,
+			.context = (void *)ctx,
+		},
+		.print_help = help_blob,
+		.takes_arg = true,
+	},
+	{
+		.names = {
+			.long_name = help_opt_long,
+			.short_name = help_opt_short
+		},
+		.handler = {
+			.handler = handle_help,
+			.context = (void *)(&the_tbl),
+		},
+		.print_help = help_help,
+		.takes_arg = false,
+	},
+	{
+		.names = {
+			.long_name = version_opt_long,
+			.short_name = version_opt_short
+		},
+		.handler = {
+			.handler = handle_version,
+			.context = (void *)ctx,
+		},
+		.print_help = help_version,
+		.takes_arg = false,
+	},
+};
+
+the_tbl.tbl = all_entries;
+the_tbl.length = sizeof(all_entries)/sizeof(*all_entries);
+
+opts_parse_data parse_data = {
+	.the_tbl = &the_tbl,
+	.on_unbound = {
+		.handler = on_unbound_arg,
+		.context = (void *)ctx,
+	},
+	.on_error = {
+		.handler = on_error,
+		.context = (void *)ctx,
+	}
+};
+
+opts_parse(argc-1, argv+1, &parse_data);
+// </opts_process>

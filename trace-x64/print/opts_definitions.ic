@@ -1,0 +1,84 @@
+// <opts_definitions>
+
+// --sym|-s
+static const char sym_opt_short = 's';
+static const char sym_opt_long[] = "sym";
+static void handle_sym(const char * opt, char * opt_arg, void * ctx)
+{
+	save_sym(opt_arg, ctx);
+}
+
+static void help_sym(const char * short_name, const char * long_name)
+{
+printf(" %s, %s <sym-file> - if <sym-file> is provided, as output by "
+"sym-map.awk,\n", short_name, long_name);
+puts(" use the symbol information in the disassembly.");
+}
+
+// --blob|-i
+static const char blob_opt_short = 'i';
+static const char blob_opt_long[] = "blob";
+static void handle_blob(const char * opt, char * opt_arg, void * ctx)
+{
+	save_blob(opt_arg, ctx);
+}
+
+static void help_blob(const char * short_name, const char * long_name)
+{
+printf(" %s, %s <iblob>   - the instruction blob provided by tx64-trace.\n",
+short_name, long_name);
+}
+
+// --help|-h
+static const char help_opt_short = 'h';
+static const char help_opt_long[] = "help";
+static void handle_help(const char * opt, char * opt_arg, void * ctx)
+{
+	print_help_quit((opts_table *)ctx);
+}
+
+static void help_help(const char * short_name, const char * long_name)
+{
+printf(" %s, %s           - print this screen.\n", short_name, long_name);
+}
+
+// --version|-v
+static const char version_opt_short = 'v';
+static const char version_opt_long[] = "version";
+static void handle_version(const char * opt, char * opt_arg, void * ctx)
+{
+	print_version_quit();
+}
+
+static void help_version(const char * short_name, const char * long_name)
+{
+printf(" %s, %s        - print version information.\n", short_name, long_name);
+}
+
+// on_unbound_arg
+static void on_unbound_arg(const char * arg, void * ctx)
+{
+	arg_unbound(arg, ctx);
+}
+
+// on_error
+static void on_error(opts_err_code err_code, const char * err_opt, void * ctx)
+{
+	switch (err_code)
+	{
+		case OPTS_UNKOWN_OPT_ERR:
+			err_quit("option '%s' unknown", err_opt);
+			return;
+		break;
+		case OPTS_ARG_REQ_ERR:
+			err_quit("option '%s' requires an argument", err_opt);
+		break;
+		case OPTS_NO_ARG_REQ_ERR:
+			err_quit("option '%s' does not take arguments", err_opt);
+		break;
+		default:
+		break;
+	}
+}
+
+// </opts_definitions>

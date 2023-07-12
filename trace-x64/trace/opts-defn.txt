@@ -1,0 +1,94 @@
+context_arg_type program_opts
+context_var_name ctx
+
+unbound_arg_code
+	opt_action(OPT_UNBOUND, arg, ctx);
+end_code
+
+on_error_code
+	((prog_options *)ctx)->err_code = err_code;
+	opt_action(OPT_ERROR, err_opt, ctx);
+end_code
+
+long_name  exec
+short_name x
+takes_args true
+handler_code
+	opt_action(OPT_EXEC, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s ...       - everything after this option is taken to be a "
+"command\n", short_name, long_name);
+puts(" and its arguments. It's executed as given and traced from the start.");
+end_code
+end
+
+long_name  no-aslr
+short_name n
+takes_args false
+handler_code
+	opt_action(OPT_NO_ASLR, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s        - no address space layout randomization when used with "
+"-%c.\n", short_name, long_name, exec_opt_short);
+end_code
+end
+
+long_name  pid
+short_name p
+takes_args true
+handler_code
+	opt_action(OPT_PID, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s <pid>      - attach to an already running process.\n",
+short_name, long_name);
+end_code
+end
+
+long_name  max-inst
+short_name m
+takes_args true
+handler_code
+	opt_action(OPT_MAX_INST, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s <num> - collect only the next <num> number of instructions.\n",
+short_name, long_name);
+end_code
+end
+
+long_name  seconds
+short_name s
+takes_args true
+handler_code
+	opt_action(OPT_SECONDS, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s <num>  - collect instructions for <num> seconds.\n",
+short_name, long_name);
+end_code
+end
+
+long_name  help
+short_name h
+takes_args false
+handler_code
+	opt_action(OPT_HELP, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s           - print this screen.\n", short_name, long_name);
+end_code
+end
+
+long_name  version
+short_name v
+takes_args false
+handler_code
+	opt_action(OPT_VERSION, opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s        - print version information.\n", short_name, long_name);
+end_code
+end

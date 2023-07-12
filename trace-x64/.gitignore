@@ -1,0 +1,4 @@
+obj/*.o
+tx64-trace
+tx64-print
+sym-map.awk

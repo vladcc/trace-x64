@@ -1,0 +1,71 @@
+context_arg_type program_opts
+context_var_name ctx
+
+unbound_arg_code
+	arg_unbound(arg, ctx);
+end_code
+
+on_error_code
+	switch (err_code)
+	{
+		case OPTS_UNKOWN_OPT_ERR:
+			err_quit("option '%s' unknown", err_opt);
+			return;
+		break;
+		case OPTS_ARG_REQ_ERR:
+			err_quit("option '%s' requires an argument", err_opt);
+		break;
+		case OPTS_NO_ARG_REQ_ERR:
+			err_quit("option '%s' does not take arguments", err_opt);
+		break;
+		default:
+		break;
+	}
+end_code
+
+long_name  sym
+short_name s
+takes_args true
+handler_code
+	save_sym(opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s <sym-file> - if <sym-file> is provided, as output by "
+"sym-map.awk,\n", short_name, long_name);
+puts(" use the symbol information in the disassembly.");
+end_code
+end
+
+long_name  blob
+short_name i
+takes_args true
+handler_code
+	save_blob(opt_arg, ctx);
+end_code
+help_code
+printf(" %s, %s <iblob>   - the instruction blob provided by tx64-trace.\n",
+short_name, long_name);
+end_code
+end
+
+long_name  help
+short_name h
+takes_args false
+handler_code
+	print_help_quit((opts_table *)ctx);
+end_code
+help_code
+printf(" %s, %s           - print this screen.\n", short_name, long_name);
+end_code
+end
+
+long_name  version
+short_name v
+takes_args false
+handler_code
+	print_version_quit();
+end_code
+help_code
+printf(" %s, %s        - print version information.\n", short_name, long_name);
+end_code
+end
