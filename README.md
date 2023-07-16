@@ -1,18 +1,18 @@
-## trace-x64
+### trace-x64
 see the instructions a process is executing
 
-## What's this?
+### What's this?
 This is a suite of tools for x64 Linux which, taken together, allow you to see
 exactly what a process is doing at the instruction level.
 
-## How is it useful?
+### How is it useful?
 It's useful for debugging and profiling. You can record an execution path of a
 binary with given arguments, examine what something like an emulator or an
 interpreter is doing (see examples), or look at what a runaway thread is
 executing. Filtering with the usual command line tools can reveal some basic
 profiling stats, like function call counts and traces.
 
-## How does it work?
+### How does it work?
 There are three tools in the tool chain:
 
 tx64-trace - this is the instruction tracer. Much like a debugger, it runs or
@@ -42,10 +42,10 @@ available, no function names will be visible.
 Generally, you'd run tx64-trace, then sym-map.awk, then tx64-print, then examine
 the output, or filter further.
 
-## Examples
+### Examples
 The code for all of the below can be found in the example-tools folder.
 
-### Hello world
+#### Hello world
 Ever wondered exactly what it takes at system level to hello world?
 ```
 $ cat hello.c 
@@ -106,7 +106,7 @@ $ ./tx64-print -s hello.bin.66694.tx64-trace.maps.end.sym -i hello.bin.66694.tx6
 With this binary it takes 133537 instructions. Ok, let's try something more
 meaningful.
 
-### Filtering
+#### Filtering
 This example assumes fib(0) == 0, fib(1) == 1, and computes the Fibonacci number
 with recursion, memoization, and iteratively in a loop. This makes for a nice
 demonstration of what can be achieved by only manipulating the text from
@@ -390,7 +390,7 @@ $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-tr
 It becomes easy to see what the program was doing just by glancing at the symbol
 names.
 
-### Real life example
+#### Real life example
 Still somewhat contrived, but let's examine how two different implementations of
 awk execute an endless loop.
 ```
@@ -406,7 +406,7 @@ $ mawk 'BEGIN {while (1);}'
 # Terminal 2
 $ ./tx64-trace -s 2 -p $(pgrep mawk)
 ```
-#### gawk
+##### gawk
 ```
 $ ./sym-map.awk gawk.68330.tx64-trace.maps.end
 
@@ -482,7 +482,7 @@ Looks like in 2 seconds gawk executed the entire loop about 3746 times and an
 internal loop 11235 times. The whole execution path is 61 instructions long. No
 internal function names are available because the gawk binary is stripped.
 
-#### mawk
+##### mawk
 ```
 $ ./sym-map.awk mawk.68333.tx64-trace.maps.end
 
@@ -507,7 +507,7 @@ execute about 29329 times. This is not an attack on gawk, however. Both
 implementations have their pros and cons. Faster execution is one of mawk's
 pros.
 
-## How to build
+### How to build
 ```
 $ make
 make rel     - release build + test
@@ -521,7 +521,7 @@ make clean   - clean up
 make help    - this screen
 ```
 
-## Hack
+### Hack
 ```
 $ tree -d trace-x64/
 trace-x64/
