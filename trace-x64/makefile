@@ -1,9 +1,9 @@
 .PHONY: help
 help:
-	@echo 'make rel     - release build + test'
-	@echo 'make test    - all + run tests'
-	@echo 'make testv   - all + run verbose tests'
+	@echo 'make rel     - release build (clean + all -O3)'
 	@echo 'make all     - trace + print + sym'
+	@echo 'make test    - run tests (needs sudo if /proc/sys/kernel/yama/ptrace_scope != 0)'
+	@echo 'make testv   - like test but verbose'
 	@echo 'make trace   - compile tracer'
 	@echo 'make print   - compile printer'
 	@echo 'make sym     - compile sym-map.awk'
@@ -11,22 +11,22 @@ help:
 	@echo 'make help    - this screen'
 
 CXX := g++
-USER_FLAGS := 
+USER_FLAGS :=
 FLAGS := -I. -Wall -Wfatal-errors $(USER_FLAGS)
 
 OBJ_DIR := ./obj
 
 .PHONY: rel
 rel: FLAGS += -O3
-rel: clean all test
+rel: clean all
 
 TEST_DIR := ./tests
 .PHONY: test
-test: all
+test:
 	bash -c "diff <($(TEST_DIR)/run-tests.sh x | grep -Eo '^test_[^ ]+' | sort -u) <(cat $(TEST_DIR)/run-tests-*.sh | grep 'function test_' | cut -d ' ' -f 2 | sort)"
 
 .PHONY: testv
-testv: all
+testv:
 	$(TEST_DIR)/run-tests.sh x
 
 .PHONY: all
