@@ -48,7 +48,7 @@ The code for all of the below can be found in the example-tools folder.
 #### Hello world
 Ever wondered exactly what it takes at system level to hello world?
 ```
-$ cat hello.c 
+$ cat hello.c
 #include <stdio.h>
 
 int main(void)
@@ -59,12 +59,12 @@ int main(void)
 
 $ gcc hello.c -o hello.bin -Wall
 
-$ ./hello.bin 
+$ ./hello.bin
 Hello world
 ```
 
 ```
-$ ./tx64-trace -x ./hello.bin 
+$ ./tx64-trace -x ./hello.bin
 Hello world
 
 $ ls hello.bin*
@@ -78,7 +78,7 @@ hello.bin  hello.bin.66694.tx64-trace.iblob  hello.bin.66694.tx64-trace.maps.end
 $ ./tx64-print -s hello.bin.66694.tx64-trace.maps.end.sym -i hello.bin.66694.tx64-trace.iblob | head
 0x7f72b5a162b0 <_dl_catch_error@@GLIBC_PRIVATE+11968> | 48 89 e7 | mov rdi, rsp
 0x7f72b5a162b3 <_dl_catch_error@@GLIBC_PRIVATE+11971> | e8 98 0d 00 00 | call 0x7f72b5a17050 <_dl_catch_error@@GLIBC_PRIVATE+15456>
-0x7f72b5a17050 <_dl_catch_error@@GLIBC_PRIVATE+15456> | f3 0f 1e fa | endbr64 
+0x7f72b5a17050 <_dl_catch_error@@GLIBC_PRIVATE+15456> | f3 0f 1e fa | endbr64
 0x7f72b5a17054 <_dl_catch_error@@GLIBC_PRIVATE+15460> | 55 | push rbp
 0x7f72b5a17055 <_dl_catch_error@@GLIBC_PRIVATE+15461> | 48 89 e5 | mov rbp, rsp
 0x7f72b5a17058 <_dl_catch_error@@GLIBC_PRIVATE+15464> | 41 57 | push r15
@@ -90,13 +90,13 @@ $ ./tx64-print -s hello.bin.66694.tx64-trace.maps.end.sym -i hello.bin.66694.tx6
 $ ./tx64-print -s hello.bin.66694.tx64-trace.maps.end.sym -i hello.bin.66694.tx64-trace.iblob | tail
 0x7f72b564554b <putenv@@GLIBC_2.2.5+2283> | 89 ef | mov edi, ebp
 0x7f72b564554d <putenv@@GLIBC_2.2.5+2285> | e8 1e 57 0a 00 | call 0x7f72b56eac70 <_exit@@GLIBC_2.2.5>
-0x7f72b56eac70 <_exit@@GLIBC_2.2.5+0> | f3 0f 1e fa | endbr64 
+0x7f72b56eac70 <_exit@@GLIBC_2.2.5+0> | f3 0f 1e fa | endbr64
 0x7f72b56eac74 <_exit@@GLIBC_2.2.5+4> | 4c 8b 05 95 e1 12 00 | mov r8, qword ptr [rip + 0x12e195]
 0x7f72b56eac7b <_exit@@GLIBC_2.2.5+11> | be e7 00 00 00 | mov esi, 0xe7
 0x7f72b56eac80 <_exit@@GLIBC_2.2.5+16> | ba 3c 00 00 00 | mov edx, 0x3c
 0x7f72b56eac85 <_exit@@GLIBC_2.2.5+21> | eb 16 | jmp 0x7f72b56eac9d <_exit@@GLIBC_2.2.5+45>
 0x7f72b56eac9d <_exit@@GLIBC_2.2.5+45> | 89 f0 | mov eax, esi
-0x7f72b56eac9f <_exit@@GLIBC_2.2.5+47> | 0f 05 | syscall 
+0x7f72b56eac9f <_exit@@GLIBC_2.2.5+47> | 0f 05 | syscall
 0x7f72b56eaca1 <_exit@@GLIBC_2.2.5+49> | 48 3d 00 f0 ff ff | cmp rax, -0x1000
 
 $ ./tx64-print -s hello.bin.66694.tx64-trace.maps.end.sym -i hello.bin.66694.tx64-trace.iblob | wc -l
@@ -126,7 +126,7 @@ $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-tr
 The whole execution took 143109 instructions. Let's examine the function call
 count. For this a 15 line awk script is enough.
 ```
-$ wc -l ./call-count.awk 
+$ wc -l ./call-count.awk
 15 ./call-count.awk
 
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | ./call-count.awk | head
@@ -182,7 +182,7 @@ So fib_rec(10) was called 177 times, fib_tbl(10) 19, and fib_loop(10) only one.
 Let's see how the execution of fib_loop(10) looked like.
 ```
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | grep -E '<fib_loop\+' | sort | uniq -c | column -s'|' -t
-      1 0x55b7c0aea2c4 <fib_loop+0>      f3 0f 1e fa                endbr64 
+      1 0x55b7c0aea2c4 <fib_loop+0>      f3 0f 1e fa                endbr64
       1 0x55b7c0aea2c8 <fib_loop+4>      55                         push rbp
       1 0x55b7c0aea2c9 <fib_loop+5>      48 89 e5                   mov rbp, rsp
       1 0x55b7c0aea2cc <fib_loop+8>      48 89 7d d8                mov qword ptr [rbp - 0x28], rdi
@@ -211,7 +211,7 @@ $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-tr
       1 0x55b7c0aea334 <fib_loop+112>    48 8b 45 e8                mov rax, qword ptr [rbp - 0x18]
       1 0x55b7c0aea338 <fib_loop+116>    5d                         pop rbp
       1 0x55b7c0aea339 <fib_loop+117>    c3                         ret
-      
+
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | grep -E '<fib_loop\+' | sort | uniq -c | column -s'|' -t | wc -l
 29
 ```
@@ -220,22 +220,22 @@ The function is 29 instructions and 118 bytes long and the loop and how many
 times it was taken is visible. Let's look at the call trace for main(). Again a
 small awk script will do.
 ```
-$ wc -l call-trace.awk 
+$ wc -l call-trace.awk
 16 call-trace.awk
 
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | awk '/<main\+0/, /<main\+.* ret/' | ./call-trace.awk  | head -n15
-0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64 
+0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64
 0x55b7c0aea3b8 <main+126> | call 0x55b7c0aea0c0 <_init+192>
-----0x55b7c0aea0c0 <_init+192> | endbr64 
+----0x55b7c0aea0c0 <_init+192> | endbr64
 ----0x55b7c0aea0c4 <_init+196> | bnd jmp qword ptr [rip + 0x2efd]
-----0x7f4aff4622d0 <__isoc99_sscanf@@GLIBC_2.7+0> | endbr64 
+----0x7f4aff4622d0 <__isoc99_sscanf@@GLIBC_2.7+0> | endbr64
 ----0x7f4aff462380 <__isoc99_sscanf@@GLIBC_2.7+176> | call 0x7f4aff48e6d0 <_IO_enable_locks@@GLIBC_PRIVATE+176>
---------0x7f4aff48e6d0 <_IO_enable_locks@@GLIBC_PRIVATE+176> | endbr64 
+--------0x7f4aff48e6d0 <_IO_enable_locks@@GLIBC_PRIVATE+176> | endbr64
 --------0x7f4aff48e6ea <_IO_enable_locks@@GLIBC_PRIVATE+202> | call 0x7f4aff48e660 <_IO_enable_locks@@GLIBC_PRIVATE+64>
-------------0x7f4aff48e660 <_IO_enable_locks@@GLIBC_PRIVATE+64> | endbr64 
-------------0x7f4aff48e6c7 <_IO_enable_locks@@GLIBC_PRIVATE+167> | ret 
+------------0x7f4aff48e660 <_IO_enable_locks@@GLIBC_PRIVATE+64> | endbr64
+------------0x7f4aff48e6c7 <_IO_enable_locks@@GLIBC_PRIVATE+167> | ret
 --------0x7f4aff48e6ef <_IO_enable_locks@@GLIBC_PRIVATE+207> | mov dword ptr [rbp + 0xc0], r12d
---------0x7f4aff48e73d <_IO_enable_locks@@GLIBC_PRIVATE+285> | ret 
+--------0x7f4aff48e73d <_IO_enable_locks@@GLIBC_PRIVATE+285> | ret
 ----0x7f4aff462385 <__isoc99_sscanf@@GLIBC_2.7+181> | lea rax, [rip + 0x1b4334]
 ----0x7f4aff46239e <__isoc99_sscanf@@GLIBC_2.7+206> | call 0x7f4aff48fa30 <_IO_str_pbackfail@@GLIBC_2.2.5+96>
 --------0x7f4aff48fa30 <_IO_str_pbackfail@@GLIBC_2.2.5+96> | endbr64
@@ -258,25 +258,25 @@ source is:
 Let's filer for only internal calls.
 ```
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | awk '/<main\+0/, /<main\+.* ret/' | ./call-trace.awk  | grep '0x55b7c' | head -n20
-0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64 
+0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64
 0x55b7c0aea3b8 <main+126> | call 0x55b7c0aea0c0 <_init+192>
-----0x55b7c0aea0c0 <_init+192> | endbr64 
+----0x55b7c0aea0c0 <_init+192> | endbr64
 ----0x55b7c0aea0c4 <_init+196> | bnd jmp qword ptr [rip + 0x2efd]
 0x55b7c0aea3bd <main+131> | cmp eax, 1
 0x55b7c0aea42f <main+245> | call 0x55b7c0aea1c9 <fib_rec>
-----0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+----0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ----0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
---------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+--------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 --------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
-------------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+------------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ------------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
-----------------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+----------------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ----------------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
---------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+--------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 --------------------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
-------------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+------------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ------------------------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
-----------------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+----------------------------0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ----------------------------0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
 ```
 
@@ -284,41 +284,41 @@ The calls to fib_rec(10) become visible. Let's filter for only the first call
 level.
 ```
 $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | awk '/<main\+0/, /<main\+.* ret/' | ./call-trace.awk  | grep '0x55b7c' | grep -E '^-{0,4}0x'
-0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64 
+0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64
 0x55b7c0aea3b8 <main+126> | call 0x55b7c0aea0c0 <_init+192>
-----0x55b7c0aea0c0 <_init+192> | endbr64 
+----0x55b7c0aea0c0 <_init+192> | endbr64
 ----0x55b7c0aea0c4 <_init+196> | bnd jmp qword ptr [rip + 0x2efd]
 0x55b7c0aea3bd <main+131> | cmp eax, 1
 0x55b7c0aea42f <main+245> | call 0x55b7c0aea1c9 <fib_rec>
-----0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+----0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ----0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
 ----0x55b7c0aea1f1 <fib_rec+40> | mov rbx, rax
 ----0x55b7c0aea1ff <fib_rec+54> | call 0x55b7c0aea1c9 <fib_rec>
 ----0x55b7c0aea204 <fib_rec+59> | add rax, rbx
-----0x55b7c0aea212 <fib_rec+73> | ret 
+----0x55b7c0aea212 <fib_rec+73> | ret
 0x55b7c0aea434 <main+250> | mov rsi, rax
 0x55b7c0aea446 <main+268> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
 0x55b7c0aea44b <main+273> | mov rax, qword ptr [rbp - 0x10]
 0x55b7c0aea452 <main+280> | call 0x55b7c0aea213 <fib_tbl>
-----0x55b7c0aea213 <fib_tbl+0> | endbr64 
+----0x55b7c0aea213 <fib_tbl+0> | endbr64
 ----0x55b7c0aea274 <fib_tbl+97> | call 0x55b7c0aea213 <fib_tbl>
 ----0x55b7c0aea279 <fib_tbl+102> | mov rbx, rax
 ----0x55b7c0aea287 <fib_tbl+116> | call 0x55b7c0aea213 <fib_tbl>
 ----0x55b7c0aea28c <fib_tbl+121> | lea rcx, [rbx + rax]
-----0x55b7c0aea2c3 <fib_tbl+176> | ret 
+----0x55b7c0aea2c3 <fib_tbl+176> | ret
 0x55b7c0aea457 <main+285> | mov rsi, rax
 0x55b7c0aea469 <main+303> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
 0x55b7c0aea46e <main+308> | mov rax, qword ptr [rbp - 0x10]
 0x55b7c0aea475 <main+315> | call 0x55b7c0aea2c4 <fib_loop>
-----0x55b7c0aea2c4 <fib_loop+0> | endbr64 
-----0x55b7c0aea339 <fib_loop+117> | ret 
+----0x55b7c0aea2c4 <fib_loop+0> | endbr64
+----0x55b7c0aea339 <fib_loop+117> | ret
 0x55b7c0aea47a <main+320> | mov rsi, rax
 0x55b7c0aea48c <main+338> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
 0x55b7c0aea491 <main+343> | mov eax, 0
 0x55b7c0aea4ab <main+369> | ret
@@ -326,63 +326,63 @@ $ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-tr
 
 And now for the full first level with library calls not excluded.
 ```
-$ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | awk '/<main\+0/, /<main\+.* ret/' | ./call-trace.awk  | grep -E '^-{0,4}0x' 
-0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64 
+$ ./tx64-print -s fib.bin.66938.tx64-trace.maps.end.sym -i fib.bin.66938.tx64-trace.iblob | awk '/<main\+0/, /<main\+.* ret/' | ./call-trace.awk  | grep -E '^-{0,4}0x'
+0x55b7c0aea33a <main+0> | f3 0f 1e fa | endbr64
 0x55b7c0aea3b8 <main+126> | call 0x55b7c0aea0c0 <_init+192>
-----0x55b7c0aea0c0 <_init+192> | endbr64 
+----0x55b7c0aea0c0 <_init+192> | endbr64
 ----0x55b7c0aea0c4 <_init+196> | bnd jmp qword ptr [rip + 0x2efd]
-----0x7f4aff4622d0 <__isoc99_sscanf@@GLIBC_2.7+0> | endbr64 
+----0x7f4aff4622d0 <__isoc99_sscanf@@GLIBC_2.7+0> | endbr64
 ----0x7f4aff462380 <__isoc99_sscanf@@GLIBC_2.7+176> | call 0x7f4aff48e6d0 <_IO_enable_locks@@GLIBC_PRIVATE+176>
 ----0x7f4aff462385 <__isoc99_sscanf@@GLIBC_2.7+181> | lea rax, [rip + 0x1b4334]
 ----0x7f4aff46239e <__isoc99_sscanf@@GLIBC_2.7+206> | call 0x7f4aff48fa30 <_IO_str_pbackfail@@GLIBC_2.2.5+96>
 ----0x7f4aff4623a3 <__isoc99_sscanf@@GLIBC_2.7+211> | lea rdx, [rsp + 8]
 ----0x7f4aff4623dd <__isoc99_sscanf@@GLIBC_2.7+269> | call 0x7f4aff462a60 <psiginfo@@GLIBC_2.10+1440>
 ----0x7f4aff4623e2 <__isoc99_sscanf@@GLIBC_2.7+274> | mov rdx, qword ptr [rsp + 0x118]
-----0x7f4aff462401 <__isoc99_sscanf@@GLIBC_2.7+305> | ret 
+----0x7f4aff462401 <__isoc99_sscanf@@GLIBC_2.7+305> | ret
 0x55b7c0aea3bd <main+131> | cmp eax, 1
 0x55b7c0aea42f <main+245> | call 0x55b7c0aea1c9 <fib_rec>
-----0x55b7c0aea1c9 <fib_rec+0> | endbr64 
+----0x55b7c0aea1c9 <fib_rec+0> | endbr64
 ----0x55b7c0aea1ec <fib_rec+35> | call 0x55b7c0aea1c9 <fib_rec>
 ----0x55b7c0aea1f1 <fib_rec+40> | mov rbx, rax
 ----0x55b7c0aea1ff <fib_rec+54> | call 0x55b7c0aea1c9 <fib_rec>
 ----0x55b7c0aea204 <fib_rec+59> | add rax, rbx
-----0x55b7c0aea212 <fib_rec+73> | ret 
+----0x55b7c0aea212 <fib_rec+73> | ret
 0x55b7c0aea434 <main+250> | mov rsi, rax
 0x55b7c0aea446 <main+268> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
-----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64 
+----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64
 ----0x7f4aff46081a <printf@@GLIBC_2.2.5+170> | call 0x7f4aff4750b0 <psiginfo@@GLIBC_2.10+76784>
 ----0x7f4aff46081f <printf@@GLIBC_2.2.5+175> | mov rdx, qword ptr [rsp + 0x18]
-----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret 
+----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret
 0x55b7c0aea44b <main+273> | mov rax, qword ptr [rbp - 0x10]
 0x55b7c0aea452 <main+280> | call 0x55b7c0aea213 <fib_tbl>
-----0x55b7c0aea213 <fib_tbl+0> | endbr64 
+----0x55b7c0aea213 <fib_tbl+0> | endbr64
 ----0x55b7c0aea274 <fib_tbl+97> | call 0x55b7c0aea213 <fib_tbl>
 ----0x55b7c0aea279 <fib_tbl+102> | mov rbx, rax
 ----0x55b7c0aea287 <fib_tbl+116> | call 0x55b7c0aea213 <fib_tbl>
 ----0x55b7c0aea28c <fib_tbl+121> | lea rcx, [rbx + rax]
-----0x55b7c0aea2c3 <fib_tbl+176> | ret 
+----0x55b7c0aea2c3 <fib_tbl+176> | ret
 0x55b7c0aea457 <main+285> | mov rsi, rax
 0x55b7c0aea469 <main+303> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
-----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64 
+----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64
 ----0x7f4aff46081a <printf@@GLIBC_2.2.5+170> | call 0x7f4aff4750b0 <psiginfo@@GLIBC_2.10+76784>
 ----0x7f4aff46081f <printf@@GLIBC_2.2.5+175> | mov rdx, qword ptr [rsp + 0x18]
-----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret 
+----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret
 0x55b7c0aea46e <main+308> | mov rax, qword ptr [rbp - 0x10]
 0x55b7c0aea475 <main+315> | call 0x55b7c0aea2c4 <fib_loop>
-----0x55b7c0aea2c4 <fib_loop+0> | endbr64 
-----0x55b7c0aea339 <fib_loop+117> | ret 
+----0x55b7c0aea2c4 <fib_loop+0> | endbr64
+----0x55b7c0aea339 <fib_loop+117> | ret
 0x55b7c0aea47a <main+320> | mov rsi, rax
 0x55b7c0aea48c <main+338> | call 0x55b7c0aea0a0 <_init+160>
-----0x55b7c0aea0a0 <_init+160> | endbr64 
+----0x55b7c0aea0a0 <_init+160> | endbr64
 ----0x55b7c0aea0a4 <_init+164> | bnd jmp qword ptr [rip + 0x2f0d]
-----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64 
+----0x7f4aff460770 <printf@@GLIBC_2.2.5+0> | endbr64
 ----0x7f4aff46081a <printf@@GLIBC_2.2.5+170> | call 0x7f4aff4750b0 <psiginfo@@GLIBC_2.10+76784>
 ----0x7f4aff46081f <printf@@GLIBC_2.2.5+175> | mov rdx, qword ptr [rsp + 0x18]
-----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret 
+----0x7f4aff460836 <printf@@GLIBC_2.2.5+198> | ret
 0x55b7c0aea491 <main+343> | mov eax, 0
 0x55b7c0aea4ab <main+369> | ret
 ```
@@ -509,17 +509,11 @@ pros.
 
 ### How to build
 ```
-$ make
-make rel     - release build + test
-make test    - all + run tests
-make testv   - all + run verbose tests
-make all     - trace + print + sym
-make trace   - compile tracer
-make print   - compile printer
-make sym     - compile sym-map.awk
-make clean   - clean up
-make help    - this screen
+$ make rel && sudo make sure
 ```
+
+sudo is only needed to run the tests if /proc/sys/kernel/yama/ptrace_scope is
+not 0.
 
 ### Hack
 ```
