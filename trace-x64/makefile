@@ -1,6 +1,7 @@
 .PHONY: help
 help:
 	@echo 'make rel     - release build (clean + all -O3)'
+	@echo 'make sure    - test + test cases check'
 	@echo 'make all     - trace + print + sym'
 	@echo 'make test    - run tests (needs sudo if /proc/sys/kernel/yama/ptrace_scope != 0)'
 	@echo 'make testv   - like test but verbose'
@@ -20,10 +21,14 @@ OBJ_DIR := ./obj
 rel: FLAGS += -O3
 rel: clean all
 
+.PHONY: sure
+sure:
+	bash -c "diff <($(TEST_DIR)/run-tests.sh x | grep -Eo '^test_[^ ]+' | sort -u) <(cat $(TEST_DIR)/run-tests-*.sh | grep 'function test_' | cut -d ' ' -f 2 | sort)"
+
 TEST_DIR := ./tests
 .PHONY: test
 test:
-	bash -c "diff <($(TEST_DIR)/run-tests.sh x | grep -Eo '^test_[^ ]+' | sort -u) <(cat $(TEST_DIR)/run-tests-*.sh | grep 'function test_' | cut -d ' ' -f 2 | sort)"
+	$(TEST_DIR)/run-tests.sh
 
 .PHONY: testv
 testv:
